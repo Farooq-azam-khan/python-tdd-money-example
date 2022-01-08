@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 class Money(ABC):
+
     def __init__(self, amount: int, currency: str):
         self.amount = amount
         self.currency = currency 
@@ -27,7 +28,9 @@ class Money(ABC):
     #def get_currency(self): # -> 'str'
     #    pass 
     def times(self, multiplier: int):
-        return Money(self.amount * multiplier, currency)
+        return Money(self.amount * multiplier, self.currency)
+
+
     def currency(self):
         return self.currency
 
@@ -40,8 +43,6 @@ class Dollar(Money):
         Money.__init__(self, amount, currency)
 
 
-    def times(self, multiplyer: int):
-        return Money.dollar(self.amount * multiplyer)
 
     def get_currency(self) -> str:
         return self.currency 
@@ -52,9 +53,6 @@ class Franc(Money):
     def __init__(self, amount: int, currency: str = "CHF") -> None:
         Money.__init__(self, amount, currency)
 
-    def times(self, multiplier):
-        return Money.franc(self.amount * multiplier)
-   
     def get_currency(self) -> str:
         return self.currency
 
