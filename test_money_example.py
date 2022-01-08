@@ -28,3 +28,7 @@ def test_franc_multiplication():
 def test_currency():
     assert "USD" == Money.dollar(1).get_currency()
     assert "CHF" == Money.franc(1).get_currency()
+
+def test_repr():
+    assert Money.dollar(1).__repr__() == "1 USD"
+    assert Money.franc(1).__repr__() == "1 CHF"

@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
 class Money(ABC):
-    def __init__(self, amount: int):
+    def __init__(self, amount: int, currency: str):
         self.amount = amount
-        self.currency = None 
+        self.currency = currency 
 
     def __eq__(self, other):
         self_class_name = type(self).__name__
@@ -12,12 +12,12 @@ class Money(ABC):
    
     @staticmethod
     def dollar(amount: int):
-        return Dollar(amount) 
+        return Dollar(amount, "USD")
     
     
     @staticmethod
     def franc(amount: int):
-        return Franc(amount)
+        return Franc(amount, "CHF")
     
     
     @abstractmethod
@@ -32,16 +32,17 @@ class Money(ABC):
     def currency(self):
         return self.currency
 
+    def __repr__(self):
+        return f"{self.amount} {self.currency}"
 
 class Dollar(Money):
   
     def __init__(self, amount: int, currency: str = "USD") -> None:
-        Money.__init__(self, amount)
-        self.currency = currency 
+        Money.__init__(self, amount, currency)
 
 
     def times(self, multiplyer: int):
-        return Dollar(self.amount * multiplyer)
+        return Money.dollar(self.amount * multiplyer)
 
     def get_currency(self) -> str:
         return self.currency 
@@ -50,8 +51,7 @@ class Dollar(Money):
 class Franc(Money):
 
     def __init__(self, amount: int, currency: str = "CHF") -> None:
-        Money.__init__(self, amount)
-        self.currency = currency 
+        Money.__init__(self, amount, currency)
 
     def times(self, multiplier):
         return Money.franc(self.amount * multiplier)
