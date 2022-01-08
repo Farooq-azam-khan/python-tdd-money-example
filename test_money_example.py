@@ -9,3 +9,5 @@ def test_multiplication():
 
 def test_equality():
     assert Dollar(5).equals(Dollar(5))
+    # Triangulation: when the second test demands a more general solution, then and only then do we generalize
+    assert not Dollar(5).equals(Dollar(6))
