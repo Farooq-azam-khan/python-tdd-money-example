@@ -1,4 +1,4 @@
-from dollar import Dollar, Franc
+from money import Dollar, Franc
 
 def test_multiplication():
     five = Dollar(5)
