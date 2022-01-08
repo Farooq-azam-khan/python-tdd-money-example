@@ -3,13 +3,9 @@ from abc import ABC, abstractmethod
 
 
 class Expression(ABC):
-    pass 
-
-class Bank:
-    def reduce(self, source: Expression, to: str):
-        sm: Sum = source
-        amount: int = sm.augend.amount + sm.addend.amount
-        return Money(amount, to) 
+    @abstractmethod
+    def reduce(self, to: str): # -> Money
+        pass 
 
 class Money(Expression):
 
@@ -45,19 +41,20 @@ class Money(Expression):
     def plus(self, addend) -> Expression:
         return Sum(self, addend) # Money(self.amount + addend.amount, self.currency)
 
+    def reduce(self, to: str): # -> Money
+        return self
+
+class Bank:
+    def reduce(self, source: Expression, to: str) -> Money:
+        return source.reduce(to)
+
 class Sum(Expression):
+    
     def __init__(self, augend: Money, addend: Money):
         self.augend: Money = augend
         self.addend: Money = addend
-class Sum:
-    def __init__(self, augend: Money, addend: Money):
-        self.augend: Money = augend
-        self.addend: Money = addend
-class Sum:
-    def __init__(self, augend: Money, addend: Money):
-        self.augend: Money = augend
-        self.addend: Money = addend
-class Sum:
-    def __init__(self, augend: Money, addend: Money):
-        self.augend: Money = augend
-        self.addend: Money = addend
+
+    def reduce(self, to: str) -> Money: 
+        amnt: int = self.augend.amount + self.addend.amount
+        return Money(amnt, to)
+

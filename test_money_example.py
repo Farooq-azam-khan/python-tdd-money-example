@@ -58,3 +58,9 @@ def test_reduce_sum():
     bank: Bank = Bank()
     result: Money = bank.reduce(sm, "USD")
     assert Money.dollar(7) == result
+
+
+def test_reduce_money():
+    bank: Bank = Bank()
+    result: Money = bank.reduce(Money.dollar(1), "USD")
+    assert Money.dollar(1) == result
