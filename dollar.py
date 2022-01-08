@@ -6,5 +6,7 @@ class Dollar:
 
     def equals(self, other):
         return self.amount == other.amount 
+    def __eq__(self, other):
+        return self.equals(other)
     
 
