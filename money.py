@@ -12,6 +12,9 @@ class Money(ABC):
     @staticmethod
     def dollar(amount: int):
         return Dollar(amount) 
+    @staticmethod
+    def franc(amount: int):
+        return Franc(amount)
     
     @abstractmethod
     def times(self, multiplyer: int): # -> 'Money'
