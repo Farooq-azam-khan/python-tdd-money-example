@@ -1,4 +1,4 @@
-from money import Money
+from money import Money, Franc
 
 
 def test_multiplication():
@@ -32,3 +32,6 @@ def test_currency():
 def test_repr():
     assert Money.dollar(1).__repr__() == "1 USD"
     assert Money.franc(1).__repr__() == "1 CHF"
+
+def test_different_class_equality():
+    assert Money(10, "CHF") == Franc(10, "CHF")

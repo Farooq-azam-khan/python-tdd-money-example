@@ -6,9 +6,7 @@ class Money(ABC):
         self.currency = currency 
 
     def __eq__(self, other):
-        self_class_name = type(self).__name__
-        other_class_name = type(other).__name__
-        return self.amount == other.amount and self_class_name == other_class_name
+        return self.amount == other.amount and self.currency == other.currency 
    
     @staticmethod
     def dollar(amount: int):
@@ -20,14 +18,14 @@ class Money(ABC):
         return Franc(amount, "CHF")
     
     
-    @abstractmethod
-    def times(self, multiplyer: int): # -> 'Money'
-        pass 
+    #@abstractmethod
+    #def times(self, multiplyer: int): # -> 'Money'
+    #    pass 
 
     
-    @abstractmethod
-    def get_currency(self): # -> 'str'
-        pass 
+    #@abstractmethod
+    #def get_currency(self): # -> 'str'
+    #    pass 
 
     def currency(self):
         return self.currency
