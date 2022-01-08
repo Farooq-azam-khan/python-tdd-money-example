@@ -1,6 +1,13 @@
 from abc import ABC, abstractmethod
 
-class Money:
+class Expression(ABC):
+    pass 
+
+class Bank:
+    def reduce(self, source: Expression, to: str):
+        return Money(10, "USD") 
+
+class Money(Expression):
 
     def __init__(self, amount: int, currency: str):
         self.amount = amount
@@ -18,15 +25,6 @@ class Money:
     def franc(amount: int):
         return Money(amount, "CHF")
     
-    
-    #@abstractmethod
-    #def times(self, multiplyer: int): # -> 'Money'
-    #    pass 
-
-    
-    #@abstractmethod
-    #def get_currency(self): # -> 'str'
-    #    pass 
     def times(self, multiplier: int):
         return Money(self.amount * multiplier, self.currency)
 
@@ -40,5 +38,5 @@ class Money:
     def get_currency(self) -> str:
         return self.currency 
 
-    def plus(self, addend): # -> Money
+    def plus(self, addend) -> Expression:
         return Money(self.amount + addend.amount, self.currency)
