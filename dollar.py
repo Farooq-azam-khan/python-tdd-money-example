@@ -1,11 +1,9 @@
 class Money:
-    def __init__(self):
-        pass 
-
-class Dollar(Money):
-    def __init__(self, amount: float):
+   def __init__(self, amount: float):
         self.amount = amount
-    
+ 
+class Dollar(Money):
+   
     def times(self, multiplyer: float):
         return Dollar(self.amount * multiplyer)
 
