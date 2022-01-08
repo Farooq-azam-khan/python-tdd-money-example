@@ -1,4 +1,6 @@
-class Money:
+from abc import ABC, abstractmethod
+
+class Money(ABC):
     def __init__(self, amount: int):
         self.amount = amount
      
@@ -10,7 +12,10 @@ class Money:
     @staticmethod
     def dollar(amount: int):
         return Dollar(amount) 
-
+    
+    @abstractmethod
+    def times(self, multiplyer: int): # -> 'Money'
+        pass 
 
 class Dollar(Money):
    
