@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class Money(ABC):
+class Money:
 
     def __init__(self, amount: int, currency: str):
         self.amount = amount
