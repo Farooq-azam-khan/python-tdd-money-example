@@ -35,3 +35,7 @@ def test_repr():
 
 def test_different_class_equality():
     assert Money(10, "CHF") == Money.franc(10)
+
+def test_simple_addition():
+    sm = Money.dollar(5).plus(Money.dollar(5))
+    assert sm == Money.dollar(10)

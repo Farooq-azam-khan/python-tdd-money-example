@@ -40,14 +40,5 @@ class Money(ABC):
     def get_currency(self) -> str:
         return self.currency 
 
-'''
-class Dollar(Money):
-  
-    def __init__(self, amount: int, currency: str = "USD") -> None:
-        Money.__init__(self, amount, currency)
-
-class Franc(Money):
-
-    def __init__(self, amount: int, currency: str = "CHF") -> None:
-        Money.__init__(self, amount, currency)
-'''
+    def plus(self, addend): # -> Money
+        return Money(self.amount + addend.amount, self.currency)
