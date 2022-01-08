@@ -11,12 +11,12 @@ class Money(ABC):
    
     @staticmethod
     def dollar(amount: int):
-        return Dollar(amount, "USD")
+        return Money(amount, "USD")
     
     
     @staticmethod
     def franc(amount: int):
-        return Franc(amount, "CHF")
+        return Money(amount, "CHF")
     
     
     #@abstractmethod
