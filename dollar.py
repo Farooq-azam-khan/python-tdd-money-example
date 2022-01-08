@@ -2,11 +2,8 @@ class Money:
    def __init__(self, amount: float):
         self.amount = amount
     
-    def equals(self, other):
-        return self.amount == other.amount 
-
     def __eq__(self, other):
-        return self.equals(other)
+        return self.amount == other.amount 
  
 class Dollar(Money):
    
@@ -21,9 +18,7 @@ class Franc:
     def times(self, multiplier):
         return Franc(self.amount * multiplier)
     
-    def equals(self, other):
+    def __eq__(self, other):
         return self.amount == other.amount
 
-    def __eq__(self, other):
-        return self.equals(other)
 
