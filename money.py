@@ -26,7 +26,8 @@ class Money(ABC):
     #@abstractmethod
     #def get_currency(self): # -> 'str'
     #    pass 
-
+    def times(self, multiplier: int):
+        return Money(self.amount * multiplier, currency)
     def currency(self):
         return self.currency
 
