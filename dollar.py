@@ -11,9 +11,7 @@ class Dollar(Money):
         return Dollar(self.amount * multiplyer)
 
    
-class Franc:
-    def __init__(self, amount):
-        self.amount = amount 
+class Franc(Money):
 
     def times(self, multiplier):
         return Franc(self.amount * multiplier)
