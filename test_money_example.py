@@ -95,3 +95,25 @@ def test_mixed_addition():
     assert Money.dollar(10) == result
 
 
+def test_sum_plus_money():
+    five_bucks: Expression = Money.dollar(5)
+    ten_francs: Expression = Money.franc(10)
+    bank: Bank = Bank()
+    bank.addRate("CHF", "USD", 2)
+    sm: Expression = Sum(five_bucks, ten_francs).plus(five_bucks)
+    result: Money = bank.reduce(sm, "USD")
+    assert Money.dollar(15) == result
+
+
+def test_sum_times():
+    five_bucks: Expression = Money.dollar(5)
+    ten_francs: Expression = Money.franc(10)
+    bank: Bank = Bank()
+    bank.addRate("CHF", "USD",2)
+    sm: Expression = Sum(five_bucks, ten_francs).times(2)
+    result: Money = bank.reduce(sm, "USD")
+    assert Money.dollar(20) == result
+
+def test_plus_same_currency_return_money():
+    sm: Expression = Money.dollar(1).plus(Money.dollar(1))
+    assert isinstance(sm, Sum)

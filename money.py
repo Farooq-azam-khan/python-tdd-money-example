@@ -15,6 +15,10 @@ class Expression(ABC):
     @abstractmethod
     def reduce(self, bank, to: str): # -> Money
         pass 
+    
+    @abstractmethod
+    def times(multiplier: int) -> 'Expression':
+        pass 
 
 class Money(Expression):
 
@@ -35,7 +39,8 @@ class Money(Expression):
         return Money(amount, "CHF")
     
     def times(self, multiplier: int) -> Expression:
-        return Money(self.amount * multiplier, self.currency)
+        amnt = self.amount * multiplier
+        return Money(amnt, self.currency)
 
     def __repr__(self):
         return f"{self.amount} {self.currency}"
@@ -44,7 +49,7 @@ class Money(Expression):
         return self.currency 
 
     def plus(self, addend: Expression) -> Expression:
-        return Sum(self, addend) # Money(self.amount + addend.amount, self.currency)
+        return Sum(self, addend) 
 
     def reduce(self, bank: 'Bank', to: str): # -> Money
         rate: int = bank.rate(self.currency, to) 
@@ -75,8 +80,15 @@ class Sum(Expression):
         self.augend= augend
         self.addend= addend
 
+
     def plus(self, addend):
-        return None
+        return Sum(self, self.addend)
+
+    def times(self, multiplier: int):
+        aug = self.augend.times(multiplier)
+        add = self.addend.times(multiplier)
+        return Sum(aug, add)
+
 
     def reduce(self, bank, to: str) -> Money: 
         amnt: int = self.augend.reduce(bank, to).amount + self.addend.reduce(bank, to).amount
