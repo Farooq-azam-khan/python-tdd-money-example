@@ -17,7 +17,7 @@ class Expression(ABC):
         pass 
     
     @abstractmethod
-    def times(multiplier: int) -> 'Expression':
+    def times(self, multiplier: int) -> 'Expression':
         pass 
 
 class Money(Expression):
@@ -77,8 +77,8 @@ class Bank:
 class Sum(Expression):
     
     def __init__(self, augend: Expression, addend: Expression):
-        self.augend= augend
-        self.addend= addend
+        self.augend = augend
+        self.addend = addend
 
 
     def plus(self, addend):
