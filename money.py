@@ -34,12 +34,8 @@ class Money(Expression):
     def franc(amount: int):
         return Money(amount, "CHF")
     
-    def times(self, multiplier: int):
+    def times(self, multiplier: int) -> Expression:
         return Money(self.amount * multiplier, self.currency)
-
-
-    def currency(self):
-        return self.currency
 
     def __repr__(self):
         return f"{self.amount} {self.currency}"
@@ -47,12 +43,12 @@ class Money(Expression):
     def get_currency(self) -> str:
         return self.currency 
 
-    def plus(self, addend) -> Expression:
+    def plus(self, addend: Expression) -> Expression:
         return Sum(self, addend) # Money(self.amount + addend.amount, self.currency)
 
     def reduce(self, bank: 'Bank', to: str): # -> Money
         rate: int = bank.rate(self.currency, to) 
-        return Money(self.amount / rate, to) 
+        return Money(int(self.amount / rate), to) 
 
 class Bank:
     
@@ -67,7 +63,7 @@ class Bank:
     def rate(self, frm: str, to: str) -> int:
         if frm == to:
             return 1
-        return self.get(Pair(frm, to)) #.get return none instead of throwing error
+        return self.rates.get(Pair(frm, to)) #.get return none instead of throwing error
 
 
     def addRate(self, frm: str, to: str, rate: int) -> None:
@@ -75,12 +71,15 @@ class Bank:
 
 class Sum(Expression):
     
-    def __init__(self, augend: Money, addend: Money):
-        self.augend: Money = augend
-        self.addend: Money = addend
+    def __init__(self, augend: Expression, addend: Expression):
+        self.augend= augend
+        self.addend= addend
+
+    def plus(self, addend):
+        return None
 
     def reduce(self, bank, to: str) -> Money: 
-        amnt: int = self.augend.amount + self.addend.amount
+        amnt: int = self.augend.reduce(bank, to).amount + self.addend.reduce(bank, to).amount
         return Money(amnt, to)
 
 

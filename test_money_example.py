@@ -85,3 +85,13 @@ def test_pair_creation():
 
 def test_identity_rate():
     assert 1 == Bank().rate("USD", "USD")
+
+def test_mixed_addition():
+    five_bucks: Expression = Money.dollar(5)
+    ten_francs: Expression = Money.franc(10)
+    bank: Bank = Bank()
+    bank.addRate("CHF", "USD", 2)
+    result: Money = bank.reduce(five_bucks.plus(ten_francs), "USD")
+    assert Money.dollar(10) == result
+
+
