@@ -64,12 +64,10 @@ def test_simple_addition(bank):
     assert reduced == Money.dollar(10)
 
 
-def test_plus_returns_sum():
-    five: Money = Money.dollar(5)
-    result: Expression = five.plus(five)
-    sm: Sum = result
-    assert five == sm.augend
-    assert five == sm.addend
+def test_plus_returns_sum(five_bucks):
+    sm: Sum = five_bucks.plus(five_bucks)
+    assert five_bucks == sm.augend
+    assert five_bucks == sm.addend
 
 
 def test_reduce_sum(bank):
