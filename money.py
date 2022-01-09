@@ -1,6 +1,15 @@
 from abc import ABC, abstractmethod
  
+class Pair:
+    def __init__(self, frm: str, to: str):
+        self.frm: str = frm 
+        self.to: str = to 
 
+    def __eq__(self, other):
+        return self.frm == other.frm and self.to == other.to
+
+    def __hash__(self):
+        return 0
 
 class Expression(ABC):
     @abstractmethod
@@ -46,16 +55,23 @@ class Money(Expression):
         return Money(self.amount / rate, to) 
 
 class Bank:
+    
+    def __init__(self):
+        self.rates = {}
+
+
     def reduce(self, source: Expression, to: str) -> Money:
         return source.reduce(self, to)
     
 
-    def rate(self, frm: str, to: str):
-        return 2 if frm == "CHF" and to == "USD" else 1
+    def rate(self, frm: str, to: str) -> int:
+        if frm == to:
+            return 1
+        return self.get(Pair(frm, to)) #.get return none instead of throwing error
 
 
-    def addRate(self, x: str, y: str, z: int):
-        pass
+    def addRate(self, frm: str, to: str, rate: int) -> None:
+        self.rates[Pair(frm, to)] = rate
 
 class Sum(Expression):
     
@@ -66,4 +82,6 @@ class Sum(Expression):
     def reduce(self, bank, to: str) -> Money: 
         amnt: int = self.augend.amount + self.addend.amount
         return Money(amnt, to)
+
+
 

@@ -1,4 +1,8 @@
-from money import Money, Bank, Expression, Sum
+from money import (Money, 
+                   Bank, 
+                   Expression, 
+                   Sum, 
+                   Pair)
 
 
 def test_multiplication():
@@ -72,4 +76,12 @@ def test_reduce_money_different_currency():
     assert Money.dollar(1) == result
 
 def test_array_equals():
-    assert ['abc'] == ['abc']
+    assert ["abc"] == ["abc"]
+
+def test_pair_creation():
+    p = Pair("asdf", "def")
+    assert p.frm == "asdf"
+    assert p.to == "def"
+
+def test_identity_rate():
+    assert 1 == Bank().rate("USD", "USD")
