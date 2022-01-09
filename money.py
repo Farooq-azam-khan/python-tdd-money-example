@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 class Expression(ABC):
     @abstractmethod
-    def reduce(self, to: str): # -> Money
+    def reduce(self, bank, to: str): # -> Money
         pass 
 
 class Money(Expression):
@@ -41,12 +41,21 @@ class Money(Expression):
     def plus(self, addend) -> Expression:
         return Sum(self, addend) # Money(self.amount + addend.amount, self.currency)
 
-    def reduce(self, to: str): # -> Money
-        return self
+    def reduce(self, bank: 'Bank', to: str): # -> Money
+        rate: int = bank.rate(self.currency, to) 
+        return Money(self.amount / rate, to) 
 
 class Bank:
     def reduce(self, source: Expression, to: str) -> Money:
-        return source.reduce(to)
+        return source.reduce(self, to)
+    
+
+    def rate(self, frm: str, to: str):
+        return 2 if frm == "CHF" and to == "USD" else 1
+
+
+    def addRate(self, x: str, y: str, z: int):
+        pass
 
 class Sum(Expression):
     
@@ -54,7 +63,7 @@ class Sum(Expression):
         self.augend: Money = augend
         self.addend: Money = addend
 
-    def reduce(self, to: str) -> Money: 
+    def reduce(self, bank, to: str) -> Money: 
         amnt: int = self.augend.amount + self.addend.amount
         return Money(amnt, to)
 
