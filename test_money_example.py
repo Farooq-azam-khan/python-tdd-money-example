@@ -1,10 +1,9 @@
 from money import (Money, 
                    Bank, 
-                   Expression, 
                    Sum)
-from pair import Pair 
-
+from bank import Bank
 import pytest 
+from expression import Expression
 
 
 def test_multiplication():
@@ -80,11 +79,6 @@ def test_reduce_money_different_currency(bank):
     result: Money = bank.reduce(Money.franc(2), "USD")
     assert Money.dollar(1) == result
 
-
-def test_pair_creation():
-    p = Pair("asdf", "def")
-    assert p.frm == "asdf"
-    assert p.to == "def"
 
 def test_identity_rate(bank):
     assert 1 == bank.rate("USD", "USD")

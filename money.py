@@ -1,14 +1,5 @@
-from abc import ABC, abstractmethod
-from pair import Pair 
-
-class Expression(ABC):
-    @abstractmethod
-    def reduce(self, bank, to: str): # -> Money
-        pass 
-    
-    @abstractmethod
-    def times(self, multiplier: int) -> 'Expression':
-        pass 
+from bank import Bank 
+from expression import Expression 
 
 class Money(Expression):
 
@@ -45,24 +36,6 @@ class Money(Expression):
         rate: int = bank.rate(self.currency, to) 
         return Money(int(self.amount / rate), to) 
 
-class Bank:
-    
-    def __init__(self):
-        self.rates = {}
-
-
-    def reduce(self, source: Expression, to: str) -> Money:
-        return source.reduce(self, to)
-    
-
-    def rate(self, frm: str, to: str) -> int:
-        if frm == to:
-            return 1
-        return self.rates.get(Pair(frm, to)) #.get return none instead of throwing error
-
-
-    def addRate(self, frm: str, to: str, rate: int) -> None:
-        self.rates[Pair(frm, to)] = rate
 
 class Sum(Expression):
     
@@ -83,6 +56,5 @@ class Sum(Expression):
     def reduce(self, bank, to: str) -> Money: 
         amnt: int = self.augend.reduce(bank, to).amount + self.addend.reduce(bank, to).amount
         return Money(amnt, to)
-
 
 
