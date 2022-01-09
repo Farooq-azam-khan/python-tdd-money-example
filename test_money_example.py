@@ -57,9 +57,8 @@ def ten_francs():
     return Money.franc(10)
 
 
-def test_simple_addition(bank):
-    five: Money = Money.dollar(5)
-    sm: Expression = five.plus(five)
+def test_simple_addition(bank, five_bucks):
+    sm: Expression = five_bucks.plus(five_bucks)
     reduced: Money = bank.reduce(sm, "USD")
     assert reduced == Money.dollar(10)
 
