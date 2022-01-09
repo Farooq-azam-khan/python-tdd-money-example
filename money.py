@@ -1,15 +1,22 @@
 from bank import Bank 
 from expression import Expression 
 
+
 class Money(Expression):
 
     def __init__(self, amount: int, currency: str):
         self.amount = amount
         self.currency = currency 
 
+
     def __eq__(self, other):
         return self.amount == other.amount \
                 and self.currency == other.currency 
+
+
+
+    def __repr__(self):
+        return f"{self.amount} {self.currency}"
 
 
     @staticmethod
@@ -27,10 +34,6 @@ class Money(Expression):
         return Money(amnt, self.currency)
 
 
-    def __repr__(self):
-        return f"{self.amount} {self.currency}"
-
-    
     def plus(self, addend: Expression) -> Expression:
         return Sum(self, addend) 
 
@@ -49,6 +52,7 @@ class Sum(Expression):
 
     def plus(self, addend):
         return Sum(self, self.addend)
+
 
     def times(self, multiplier: int):
         aug = self.augend.times(multiplier)
