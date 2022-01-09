@@ -47,6 +47,15 @@ def test_different_class_equality():
 def bank():
     return Bank()
 
+@pytest.fixture
+def five_bucks():
+    return Money.dollar(5)
+
+
+@pytest.fixture
+def ten_francs():
+    return Money.franc(10)
+
 
 def test_simple_addition(bank):
     five: Money = Money.dollar(5)
@@ -87,26 +96,20 @@ def test_pair_creation():
 def test_identity_rate(bank):
     assert 1 == bank.rate("USD", "USD")
 
-def test_mixed_addition(bank):
-    five_bucks: Expression = Money.dollar(5)
-    ten_francs: Expression = Money.franc(10)
+def test_mixed_addition(bank, five_bucks, ten_francs):
     bank.addRate("CHF", "USD", 2)
     result: Money = bank.reduce(five_bucks.plus(ten_francs), "USD")
     assert Money.dollar(10) == result
 
 
-def test_sum_plus_money(bank):
-    five_bucks: Expression = Money.dollar(5)
-    ten_francs: Expression = Money.franc(10)
+def test_sum_plus_money(bank, five_bucks, ten_francs):
     bank.addRate("CHF", "USD", 2)
     sm: Expression = Sum(five_bucks, ten_francs).plus(five_bucks)
     result: Money = bank.reduce(sm, "USD")
     assert Money.dollar(15) == result
 
 
-def test_sum_times(bank):
-    five_bucks: Expression = Money.dollar(5)
-    ten_francs: Expression = Money.franc(10)
+def test_sum_times(bank, five_bucks, ten_francs):
     bank.addRate("CHF", "USD",2)
     sm: Expression = Sum(five_bucks, ten_francs).times(2)
     result: Money = bank.reduce(sm, "USD")
